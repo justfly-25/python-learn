@@ -7,5 +7,7 @@
 			"path": "D:/我的代码库"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"Codegeex.RepoIndex": true
+	}
 }

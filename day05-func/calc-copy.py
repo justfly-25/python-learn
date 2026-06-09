@@ -38,13 +38,15 @@ def add_to_history(expression,result):
     print(f"已记录:{expression} = {result}")
 
 def show_history():
+    """BUG修复①: 统一缩进为4空格，分隔线移到循环外部，只打印一次"""
     if not history:
-      print("暂无计算记录。")
-      return
-    print("=======计算历史=========\n")
-    for i,record in enumerate(history,1):
-      print(f"{i}. {record}")
-      print("=========================")
+        print("暂无计算记录。")
+        return
+
+    print("\n======= 计算历史 =========")  # \n 放在开头，先换行再打标题
+    for i, record in enumerate(history, 1):
+        print(f"  {i}. {record}")
+    print("==========================\n")  # 分隔线只打一次，放在循环外面
 
 def main_calculator():
     print("\n====简单计算器======")
@@ -53,6 +55,7 @@ def main_calculator():
     while True:
         cmd = input("\n请输入运算符")
         if cmd == "q":
+            print("再见！")  # BUG修复③: 退出时给个提示
             break
         if cmd not in ["+","-","*","/","**"]:
             print("不支持的运算符,请重新输入!")
@@ -74,14 +77,10 @@ def main_calculator():
         elif cmd == "**":
             res = power(a,b)
         print(f"结果：{a} {cmd} {b} = {res}")
-        add_to_history(f"{a} {cmd} {b}= {res}")
+        # BUG修复②: 只传表达式，不要传结果——add_to_history 会自动拼 "{表达式} = {结果}"
+        add_to_history(f"{a} {cmd} {b}", res)
 
 if __name__ == "__main__":
-            main_calculator()
-            show_history()
-
-
-
-
-         
+    main_calculator()
+    show_history()
     

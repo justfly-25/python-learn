@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学生心情与放松方式调查</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .container {
+    background: #fff;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 100%;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  h1 {
+    text-align: center;
+    color: #4a4a8a;
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+  .section {
+    margin-bottom: 28px;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    padding-left: 12px;
+    border-left: 4px solid #667eea;
+  }
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .option {
+    position: relative;
+  }
+  .option input { display: none; }
+  .option label {
+    display: inline-block;
+    padding: 8px 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #555;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .option input:checked + label {
+    background: #667eea;
+    color: #fff;
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102,126,234,0.3);
+  }
+  .option label:hover {
+    border-color: #667eea;
+  }
+  .other-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-top: 6px;
+    transition: border-color 0.2s;
+    font-family: inherit;
+  }
+  .other-input:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+  .basic-info {
+    display: flex;
+    gap: 12px;
+  }
+  .basic-info select {
+    flex: 1;
+    padding: 10px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #555;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .basic-info select:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+  textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    resize: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+  .submit-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 1px;
+  }
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(102,126,234,0.4);
+  }
+  .submit-btn:active {
+    transform: translateY(0);
+  }
+  .emoji-decor {
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  .result-box {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8f9ff;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .result-box.show { display: block; }
+  .result-box h3 { color: #4a4a8a; margin-bottom: 8px; }
+  .result-box .result-text { color: #666; font-size: 14px; line-height: 1.8; }
+  @media (max-width: 480px) {
+    .container { padding: 24px 20px; }
+    h1 { font-size: 22px; }
+    .basic-info { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="emoji-decor">🌧️ → 🌈</div>
+  <h1>大学生心情与放松方式调查</h1>
+  <p class="subtitle">匿名填写 · 仅需2分钟 · 了解你，也了解自己</p>
+
+  <!-- 基本信息 -->
+  <div class="section">
+    <div class="section-title">📋 基本信息</div>
+    <div class="basic-info">
+      <select id="gender">
+        <option value="">-- 性别 --</option>
+        <option value="男">男</option>
+        <option value="女">女</option>
+      </select>
+      <select id="grade">
+        <option value="">-- 年级 --</option>
+        <option value="大一">大一</option>
+        <option value="大二">大二</option>
+        <option value="大三">大三</option>
+        <option value="大四">大四</option>
+        <option value="研究生">研究生</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 频率 -->
+  <div class="section">
+    <div class="section-title">😔 你多久会感到情绪低落/伤心一次？</div>
+    <div class="options">
+      <div class="option"><input type="radio" name="freq" id="f1" value="几乎每天"><label for="f1">几乎每天</label></div>
+      <div class="option"><input type="radio" name="freq" id="f2" value="每周几次"><label for="f2">每周几次</label></div>
+      <div class="option"><input type="radio" name="freq" id="f3" value="每月几次"><label for="f3">每月几次</label></div>
+      <div class="option"><input type="radio" name="freq" id="f4" value="很少"><label for="f4">很少</label></div>
+      <div class="option"><input type="radio" name="freq" id="f5" value="几乎没有"><label for="f5">几乎没有</label></div>
+    </div>
+  </div>
+
+  <!-- 伤心原因 -->
+  <div class="section">
+    <div class="section-title">💔 你的伤心/情绪低落通常来自哪些原因？（多选）</div>
+    <div class="options" id="causes">
+      <div class="option"><input type="checkbox" name="cause" id="c1" value="学业压力（考试、作业、绩点）"><label for="c1">学业压力</label></div>
+      <div class="option"><input type="checkbox" name="cause" id="c2" value="人际关系（室友、朋友矛盾）"><label for="c2">人际关系</label></div>
+      <div class="option"><input type="checkbox" name="cause" id="c3" value="恋爱/感情问题"><label for="c3">恋爱/感情</label></div>
+      <div class="option"><input type="checkbox" name="cause" id="c4" value="家庭问题"><label for="c4">家庭问题</label></div>
+      <div class="option"><input type="checkbox" name="cause" id="c5" value="未来迷茫（就业、考研、方向）"><label for="c5">未来迷茫</label></div>
+      <div class="option"><input type="checkbox" name="cause" id="c6" value="经济压力"><label for="c6">经济压力</label></div>
+      <div class="option"><input type="checkbox" name="cause" id="c7" value="自我否定/自信心不足"><label for="c7">自我否定</label></div>
+      <div class="option"><input type="checkbox" name="cause" id="c8" value="社交焦虑/孤独感"><label for="c8">孤独感</label></div>
+      <div class="option"><input type="checkbox" name="cause" id="c9" value="身体疲惫/健康问题"><label for="c9">身体疲惫</label></div>
+    </div>
+    <input type="text" class="other-input" id="cause-other" placeholder="其他原因…">
+  </div>
+
+  <!-- 放松方式 -->
+  <div class="section">
+    <div class="section-title">🌿 你通常用什么方式让自己放松/开心起来？（多选）</div>
+    <div class="options" id="relax">
+      <div class="option"><input type="checkbox" name="relax" id="r1" value="刷手机/短视频"><label for="r1">刷手机/短视频</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r2" value="听音乐"><label for="r2">听音乐</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r3" value="运动/健身/跑步"><label for="r3">运动健身</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r4" value="打游戏"><label for="r4">打游戏</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r5" value="找人倾诉/聊天"><label for="r5">找人倾诉</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r6" value="吃东西/美食"><label for="r6">吃东西</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r7" value="睡觉"><label for="r7">睡觉</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r8" value="看书/看电影/追剧"><label for="r8">看书/追剧</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r9" value="一个人待着"><label for="r9">一个人待着</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r10" value="购物/消费"><label for="r10">购物消费</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r11" value="写日记/创作"><label for="r11">写日记/创作</label></div>
+      <div class="option"><input type="checkbox" name="relax" id="r12" value="出去走走/接触大自然"><label for="r12">出门走走</label></div>
+    </div>
+    <input type="text" class="other-input" id="relax-other" placeholder="其他放松方式…">
+  </div>
+
+  <!-- 开放问题 -->
+  <div class="section">
+    <div class="section-title">✍️ 如果你愿意，可以写下最近一次让你伤心的事</div>
+    <textarea id="story" placeholder="（选填）分享你的故事…"></textarea>
+  </div>
+
+  <div class="section">
+    <div class="section-title">💡 你有什么独特的解压妙招想分享给其他同学？</div>
+    <textarea id="tips" placeholder="（选填）你的独家秘方…"></textarea>
+  </div>
+
+  <button class="submit-btn" onclick="submitForm()">✅ 提交问卷</button>
+
+  <div class="result-box" id="result">
+    <h3>🎉 提交成功！谢谢你的参与</h3>
+    <p class="result-text">
+      你的每一份回答，<br>
+      都在帮助更多人了解大学生真实的心情状态。<br>
+      记住：<strong>感到伤心是正常的，主动放松是勇敢的。</strong> 💪
+    </p>
+  </div>
+</div>
+
+<script>
+function submitForm() {
+  var freq = document.querySelector('input[name="freq"]:checked');
+  if (!freq) {
+    alert('请先选择情绪低落频率哦~');
+    return;
+  }
+  
+  var causes = [];
+  document.querySelectorAll('#causes input:checked').forEach(function(cb) {
+    causes.push(cb.value);
+  });
+  var causeOther = document.getElementById('cause-other').value.trim();
+  if (causeOther) causes.push(causeOther);
+  
+  var relax = [];
+  document.querySelectorAll('#relax input:checked').forEach(function(cb) {
+    relax.push(cb.value);
+  });
+  var relaxOther = document.getElementById('relax-other').value.trim();
+  if (relaxOther) relax.push(relaxOther);
+  
+  if (causes.length === 0) {
+    alert('请至少选择一个伤心原因哦~');
+    return;
+  }
+  if (relax.length === 0) {
+    alert('请至少选择一个放松方式哦~');
+    return;
+  }
+
+  // 构建结果
+  var result = {
+    性别: document.getElementById('gender').value || '未填',
+    年级: document.getElementById('grade').value || '未填',
+    情绪低落频率: freq.value,
+    伤心原因: causes,
+    放松方式: relax,
+    最近伤心事: document.getElementById('story').value || '（未填写）',
+    解压妙招: document.getElementById('tips').value || '（未填写）'
+  };
+
+  console.log('问卷结果:', JSON.stringify(result, null, 2));
+  
+  // 显示成功提示
+  document.getElementById('result').classList.add('show');
+  document.querySelector('.submit-btn').disabled = true;
+  document.querySelector('.submit-btn').textContent = '已提交 ✓';
+  document.querySelector('.submit-btn').style.opacity = '0.6';
+  
+  // 滚动到结果
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
